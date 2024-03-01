@@ -131,7 +131,7 @@ jobs:
           php-version: ${{ matrix.php }}
       - run: composer install -d tests/install-as-dep/
       - run: docker run -d -v "$PWD/tests/install-as-dep/":/home/framework-x/ -v "$PWD/examples/index.php":/home/framework-x/public/index.php -v "$PWD/LICENSE":/home/framework-x/LICENSE -v "$PWD/tests/":/home/framework-x/tests/ php:${{ matrix.php }}-fpm
-      - run: docker run -d -p 80:80 --link $(docker ps -qn1):php -v "$PWD/tests/install-as-dep/":/home/framework-x/ -v "$PWD"/examples/nginx/nginx.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine
+      - run: docker run -d -p 80:80 --link $(docker ps -qn1):php -v "$PWD/tests/install-as-dep/":/home/framework-x/ -v "$PWD"/examples/nginx/nginx-reverse-proxy.conf:/etc/nginx/conf.d/default.conf nginx:stable-alpine
       - run: bash tests/await.sh http://localhost
       - run: bash tests/acceptance.sh http://localhost
 
